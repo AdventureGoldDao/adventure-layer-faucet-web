@@ -71,6 +71,7 @@ function WalletButton() {
 const HomeIndex = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false)
+  const [tokenFlag, setTokenFlag] = useState(0)
   const [token, setToken] = useState('');
   const [isAddressDisabled, setIsAddressDisabled] = useState(false);
   const [showBalance, setShowBalance] = useState(false);
@@ -104,7 +105,6 @@ const HomeIndex = () => {
     const formData = form.getFieldsValue();
     formData.token = token;
     setLoading(true);
-    console.log('formData', formData);
     if (!formData.toAddress) {
       message.error('Please input your devnet agld address!');
       setLoading(false);
@@ -112,7 +112,6 @@ const HomeIndex = () => {
     }
     http.post('/api/sendEth', formData)
       .then(data => {
-        console.log('data', data);
         setLoading(false);
         if (data.error) {
           message.error(data.error);
@@ -128,6 +127,10 @@ const HomeIndex = () => {
           })
         }
       }, () => setLoading(false))
+      .finally(() => {
+        setToken('');
+        setTokenFlag(tokenFlag + 1);
+      })
   }
 
   return (
@@ -139,6 +142,7 @@ const HomeIndex = () => {
         </div>
           <div className={styles.menu}>
             <a className={styles.menuItem} href={config.faucetUrl} target="_blank" rel="noopener noreferrer">Faucet</a>
+            <a className={styles.menuItem} href={config.explorerUrl} target="_blank" rel="noopener noreferrer">Explorer</a>
             <a className={styles.menuItem} href={config.bridgeUrl} target="_blank" rel="noopener noreferrer">Bridge</a>
             <a className={styles.menuItem} href={config.docsUrl} target="_blank" rel="noopener noreferrer">Doc</a>
         </div>
@@ -164,14 +168,20 @@ const HomeIndex = () => {
             <Form form={form} layout="inline" style={{ width: '100%' }}>
               <Form.Item name="toAddress" rules={[{ required: true, message: 'Please input your Devnet AGLD address!' }]}
                 disabled={isAddressDisabled}
-                style={{ width: '480px', height: '44px', color: '#211a12' }}>
+                style={{ width: '450px', height: '44px', color: '#211a12' }}>
               <Input disabled={isAddressDisabled} className={styles.customInput} size="large" placeholder="Enter your Devnet AGLD address" />
               </Form.Item >
 
               <Form.Item style={{ width: "40px" }}>
-                <Button style={{ background: "#f39b4b", fontSize: "16px", fontWeight: "600", color: "#000", border: "1px solid #f39b4b" }} size='large' type="primary" onClick={handleSubmit} loading={loading}>
-                Send Me Devnet AGLD
-                </Button>
+                {token || loading ? (
+                  <Button className={styles.sendBtn} size='large' type="primary" onClick={handleSubmit} loading={loading}>
+                    Send Me Devnet AGLD
+                  </Button>
+                ) : (
+                  <Button disabled className={styles.sendBtn} style={{opacity: 0.6}} size='large' type="primary">
+                    Send Me Devnet AGLD
+                  </Button>
+                )}
               </Form.Item>
               {showBalance && (
                 <Form.Item style={{width: "100%"}}>
@@ -182,9 +192,14 @@ const HomeIndex = () => {
                 </Form.Item>
               )}
               <Form.Item>
-                <Turnstile
-                  sitekey={config.turnstileSiteKey}
-                  onVerify={(token) => setToken(token)}
+                  <Turnstile
+                    key={tokenFlag}
+                    sitekey={config.turnstileSiteKey}
+                    onVerify={(token) => setToken(token)}
+                    onExpire={() => {
+                      setTokenFlag(tokenFlag + 1)
+                      setToken('');
+                    }}
                 />
               </Form.Item>
             </Form>
