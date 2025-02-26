@@ -91,19 +91,87 @@ Configure the following parameters in `config.js`:
 
 ## 🌐 Deployment
 
-### Nginx Configuration Example
+After building your application with `npm run build`, you'll need to deploy it to your production server.
+
+### Server Deployment Guide
+
+#### 1. Build the application
+
+```bash
+# Build for production
+npm run build
+```
+
+#### 2. Transfer files to your server
+
+```bash
+# Using SCP (Secure Copy)
+scp -r ./build user@your-server-ip:/path/to/your/webroot/
+
+# Or using SFTP or other file transfer methods
+```
+
+#### 3. Nginx Configuration
+
+Create an Nginx configuration file (e.g., `/etc/nginx/conf.d/adventure-faucet.conf`) with the following content:
 
 ```nginx
 server {
     listen 80;
-    server_name your-domain.com;
-    root /path/to/build;
-    
+    server_name localhost;  # Replace with your domain if applicable
+    access_log /var/log/nginx/faucet-access.log;
+
     location / {
-        try_files $uri $uri/ /index.html;
+        root /path/to/your/webroot/build;            # webroot path
+        index index.html index.htm;
+        try_files $uri /index.html;
+    }
+
+    location = /index.html {
+        add_header Cache-Control no-store,no-cache;
+        root /path/to/your/webroot/build;            # webroot path
+    }
+
+    location /api {
+        rewrite ^/api(.*) $1 break;
+        proxy_pass http://172.x.x.x:8502;             # Backend API server address and port
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
 ```
+
+#### 4. Check configuration and restart Nginx
+
+```bash
+# Test Nginx configuration
+sudo nginx -t
+
+# If the test passes, restart Nginx
+sudo systemctl restart nginx
+# or
+sudo service nginx restart
+```
+
+#### 5. Verify deployment
+
+Access your application at:
+- http://your-server-ip:80 (if using the IP directly)
+- http://your-domain:80 (if you've set up a domain)
+
+### Important Notes for Deployment
+
+1. Ensure the directory `/path/to/your/webroot/` exists on your server and has proper permissions
+2. The backend API service must be running at the configured address (172.x.x.x:8502)
+3. If using a firewall, ensure port 80 is open
+4. For production use, consider:
+   - Adding SSL/TLS (HTTPS) support
+   - Setting up proper domain name with DNS records
 
 ### Other Deployment Options
 
