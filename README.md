@@ -91,9 +91,38 @@ Configure the following parameters in `config.js`:
 
 ## 🌐 Deployment
 
-After building your application with `npm run build`, you'll need to deploy it to your production server.
+### Automated Deployment (Recommended)
 
-### Server Deployment Guide
+We provide a deployment script that automates the entire deployment process. To use it:
+
+1. Make the deployment script executable:
+```bash
+chmod +x deploy-pro.sh
+```
+
+2. Set up the required environment variables:
+```bash
+export DEPLOY_SERVER="your-server-domain-or-ip"
+export DEPLOY_USER="your-ssh-user"
+export DEPLOY_PATH="/path/to/your/webroot/build"
+```
+
+3. Run the deployment script:
+```bash
+./deploy-pro.sh
+```
+
+The script will:
+- Install dependencies
+- Build the application
+- Create a backup of the existing deployment
+- Deploy the new version
+- Restart Nginx
+- Provide rollback instructions if needed
+
+### Manual Deployment
+
+If you prefer to deploy manually, follow these steps:
 
 #### 1. Build the application
 
@@ -172,6 +201,36 @@ Access your application at:
 4. For production use, consider:
    - Adding SSL/TLS (HTTPS) support
    - Setting up proper domain name with DNS records
+   - Regular backups of your deployment
+   - Monitoring system resources
+   - Setting up proper logging
+
+### Security Considerations
+
+1. Always use HTTPS in production
+2. Set up proper firewall rules
+3. Keep all dependencies up to date
+4. Use environment variables for sensitive configuration
+5. Implement rate limiting
+6. Set up proper CORS policies
+
+### Rollback Procedure
+
+In case you need to rollback to a previous version:
+
+1. Locate the backup directory on your server (format: `${DEPLOY_PATH}_backup_YYYYMMDD_HHMMSS`)
+2. Replace the current deployment with the backup:
+```bash
+# SSH into your server
+ssh $DEPLOY_USER@$DEPLOY_SERVER
+
+# Replace current deployment with backup
+sudo rm -rf $DEPLOY_PATH/*
+sudo cp -r ${DEPLOY_PATH}_backup_YYYYMMDD_HHMMSS/* $DEPLOY_PATH/
+
+# Restart Nginx
+sudo systemctl restart nginx
+```
 
 ### Other Deployment Options
 
