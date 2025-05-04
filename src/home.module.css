@@ -92,7 +92,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
 
   .logoBox {
     margin-top: 39px;
