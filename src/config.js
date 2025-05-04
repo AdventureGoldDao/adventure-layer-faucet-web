@@ -1,18 +1,17 @@
 const config = {
-    faucetUrl: "https://faucet-devnet.adventurelayer.xyz",
-    explorerUrl: "https://explorer-devnet.adventurelayer.xyz",
-    bridgeUrl: "https://bridge-devnet.adventurelayer.xyz",
+    faucetUrl: "https://faucet-testnet.adventurelayer.xyz",
+    bridgeUrl: "https://bridge-testnet.adventurelayer.xyz",
     docsUrl: "https://docs.adventurelayer.xyz",
-    rpcUrl: "https://faucet-api.adventurelayer.xyz",
-    turnstileSiteKey: "0x4AAAAAAAiJtKFxW8lMNm4I"
+    rpcUrl: "https://rpc-testnet.adventurelayer.xyz/2dc324be41f455072e67fc05138a7312b6e7dcdf",
+    turnstileSiteKey: "0x4AAAAAABaAe_m-eq0l4T6Y"
 };
 
 export default config;
 
 export const AdventureLayer = {
-  chainId: 242069,
-  rpcUrl: "https://faucet-api.adventurelayer.xyz",
-  wssUrl: "wss://rpc-devnet.adventurelayer.xyz",
+  chainId: 242070,
+  rpcUrl: "https://rpc-testnet.adventurelayer.xyz/2dc324be41f455072e67fc05138a7312b6e7dcdf",
+  wssUrl: "wss://rpc-testnet.adventurelayer.xyz/2dc324be41f455072e67fc05138a7312b6e7dcdf",
   chainName: 'Adventure Layer L2',
-  blockExplorerUrl: 'https://explorer.adventurelayer.xyz',
+  blockExplorerUrl: 'https://explorer-testnet.adventurelayer.xyz',
 }
