@@ -3,7 +3,7 @@ import { message } from 'antd';
 
 // Define the base URL for the API
 // const API_BASE_URL = "http://3.84.203.161:8502";
-const API_BASE_URL = "https://faucet-devnet.adventurelayer.xyz/";
+const API_BASE_URL = "https://faucet-api.adventurelayer.xyz/";
 
 // Create an axios instance with the base URL
 const http = axios.create({
