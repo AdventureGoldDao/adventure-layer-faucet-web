@@ -19,15 +19,15 @@ const { Text } = Typography;
 const faqData = [
   {
     question: 'How do I use this?',
-    answer: 'To request funds, enter your wallet address, and hit “Send Me Devnet AGLD. We support wallets as received addresses but not smart contracts.'
+    answer: 'To request funds, enter your wallet address, and hit “Send Me Testnet AGLD. We support wallets as received addresses but not smart contracts.'
   },
   {
     question: 'How does it Work?',
-    answer: 'You can request 0.5 Adventure Layer Devnet AGLD every 24h.'
+    answer: 'You can request 0.5 Adventure Layer Testnet AGLD every 24h.'
   },
   {
-    question: 'What is Adventure Layer Devnet Faucet?',
-    answer: 'Devnet AGLD Faucet is a developer tool to get Devnet AGLD in order to test and troubleshoot your decentralized application or protocol before going live on Adventure Layer mainnet, where one must use real Devnet AGLD. Most faucets require social authentication (e.g. Twitter post or login confirming you are a real human) or place you in a queue to wait for a token through the faucet. The Adventure Layer Devnet faucet is free, fast, and does not require authentication, though you can optionally login to Adventure Layer to get an increased drip.'
+    question: 'What is Adventure Layer Testnet Faucet?',
+    answer: 'Testnet AGLD Faucet is a developer tool to get Testnet AGLD in order to test and troubleshoot your decentralized application or protocol before going live on Adventure Layer mainnet, where one must use real Testnet AGLD. Most faucets require social authentication (e.g. Twitter post or login confirming you are a real human) or place you in a queue to wait for a token through the faucet. The Adventure Layer Testnet faucet is free, fast, and does not require authentication, though you can optionally login to Adventure Layer to get an increased drip.'
   }
 ];
 
@@ -118,7 +118,7 @@ const HomeIndex = () => {
     formData.token = token;
     setLoading(true);
     if (!formData.toAddress) {
-      message.error('Please input your devnet agld address!');
+      message.error('Please input your Testnet agld address!');
       setLoading(false);
       return;
     }
@@ -171,27 +171,27 @@ const HomeIndex = () => {
         </div>
 
         <div className={styles.titleBox}>
-          <div className={styles.title}>Adventure Layer Devnet Faucet</div>
-          <div className={styles.desc}>Fast and reliable. <span className={styles.descNum}>0.5</span> Adventure Layer Devnet AGLD/day.</div>
-          <div className={styles.rpc}>RPC Endpoint for Adevnture Layer Devnet:  <a className={styles.rpc_url} href={config.rpcUrl} target="_blank" rel="noopener noreferrer">{config.rpcUrl}</a></div>
+          <div className={styles.title}>Adventure Layer Testnet Faucet</div>
+          <div className={styles.desc}>Fast and reliable. <span className={styles.descNum}>0.5</span> AGLD/day.</div>
+          <div className={styles.rpc}>RPC Endpoint for Adevnture Layer Testnet:  <a className={styles.rpc_url} href={config.rpcUrl} target="_blank" rel="noopener noreferrer">{config.rpcUrl}</a></div>
         </div>
         <div className={styles.sendBox}>
           <div className={styles.send}>
             <Form form={form} layout="inline" style={{ width: '100%' }}>
-              <Form.Item name="toAddress" rules={[{ required: true, message: 'Please input your Devnet AGLD address!' }]}
+              <Form.Item name="toAddress" rules={[{ required: true, message: 'Please input your Testnet AGLD address!' }]}
                 disabled={isAddressDisabled}
                 style={{ width: '450px', height: '44px', color: '#211a12' }}>
-              <Input disabled={isAddressDisabled} className={styles.customInput} size="large" placeholder="Enter your Devnet AGLD address" />
+              <Input disabled={isAddressDisabled} className={styles.customInput} size="large" placeholder="Enter your Testnet AGLD address" />
               </Form.Item >
 
               <Form.Item style={{ width: "40px" }}>
                 {token || loading ? (
                   <Button className={styles.sendBtn} size='large' type="primary" onClick={handleSubmit} loading={loading}>
-                    Send Me Devnet AGLD
+                    Send Me Testnet AGLD
                   </Button>
                 ) : (
                   <Button disabled className={styles.sendBtn} style={{opacity: 0.6}} size='large' type="primary">
-                    Send Me Devnet AGLD
+                    Send Me Testnet AGLD
                   </Button>
                 )}
               </Form.Item>
@@ -199,7 +199,7 @@ const HomeIndex = () => {
                 <Form.Item style={{width: "100%"}}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <Text strong style={{ color: "#fff" }}>Balance: </Text>
-                    <Text type="success" style={{ color: "#f39b4b", marginLeft: 8 }}> {addressBalance} Devnet AGLD</Text>
+                    <Text type="success" style={{ color: "#f39b4b", marginLeft: 8 }}> {addressBalance} Testnet AGLD</Text>
                   </div>
                 </Form.Item>
               )}

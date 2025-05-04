@@ -1,6 +1,6 @@
 # Adventure Layer Faucet
 
-Adventure Layer Faucet is a React-based web application for obtaining test AGLD tokens on the Adventure Layer Devnet test network. Users can receive 0.5 Devnet AGLD every 24 hours.
+Adventure Layer Faucet is a React-based web application for obtaining test AGLD tokens on the Adventure Layer Testnet test network. Users can receive 0.5 Testnet AGLD every 24 hours.
 
 ## ✨ Features
 
@@ -9,7 +9,7 @@ Adventure Layer Faucet is a React-based web application for obtaining test AGLD 
 - 🔒 Cloudflare Turnstile human verification integration
 - 🌐 ENS domain resolution support
 - ⚡ Real-time balance query
-- 🎯 Daily limit of 0.5 Devnet AGLD
+- 🎯 Daily limit of 0.5 Testnet AGLD
 
 ## 📁 Directory Structure
 
